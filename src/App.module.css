@@ -1,0 +1,14 @@
+.task {
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+}
+
+.title {
+    margin: 10px;
+    font-weight: 600;
+}
+
+.buttons {
+    margin-top: 10px;
+}
