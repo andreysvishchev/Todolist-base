@@ -100,7 +100,7 @@ test('correct task should change its name', () => {
     expect(endState['todolistId1'][1].title).toBe("JS");
 });
 
-test('new array should be added when new todolist is added', () => {
+/*test('new array should be added when new todolist is added', () => {
     const startState: TasksStateType = {
         "todolistId1": [
             { id: "1", title: "CSS", isDone: false },
@@ -127,7 +127,7 @@ test('new array should be added when new todolist is added', () => {
 
     expect(keys.length).toBe(3);
     expect(endState[newKey]).toEqual([]);
-});
+});*/
 
 
 test('property with todolistId should be deleted', () => {

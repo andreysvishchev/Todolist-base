@@ -71,10 +71,9 @@ function App() {
   }
 
   function addTodolist(title: string) {
-    dispatchToTodolistsReducer(AddTodolistAC(title));
-    dispatchToTaskReducer(AddTodolistAC(title));
-    console.log(tasks);
-    console.log(todolists);
+    const todoListId = v1();
+    dispatchToTodolistsReducer(AddTodolistAC(todoListId,title));
+    dispatchToTaskReducer(AddTodolistAC(todoListId,title));
   }
 
   return (

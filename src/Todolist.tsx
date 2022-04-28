@@ -51,7 +51,9 @@ export function Todolist(props: PropsType) {
       </h3>
       <AddItemForm addItem={addTask} />
       <div>
-        {props.tasks?.map((t) => {
+        {
+          props.tasks
+          ? props.tasks.map((t) => {
           const onClickHandler = () => props.removeTask(t.id, props.id);
           const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
             let newIsDoneValue = e.currentTarget.checked;
@@ -70,7 +72,9 @@ export function Todolist(props: PropsType) {
               </IconButton>
             </div>
           );
-        })}
+        })
+        : <></>
+        }
       </div>
       <div className={s.buttons}>
         <Button
