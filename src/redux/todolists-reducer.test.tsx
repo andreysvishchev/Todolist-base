@@ -24,7 +24,7 @@ test('correct todolist should be removed', () => {
     expect(endState[0].id).toBe(todolistId2);
 });
 
-test('correct todolist should be added', () => {
+/*test('correct todolist should be added', () => {
     let todolistId1 = v1();
     let todolistId2 = v1();
 
@@ -41,7 +41,7 @@ test('correct todolist should be added', () => {
     expect(endState[2].title).toBe(newTodolistTitle);
     expect(endState[2].filter).toBe("all");
     expect(endState[2].id).toBeDefined();
-});
+});*/
 
 test('correct todolist should change its name', () => {
     let todolistId1 = v1();

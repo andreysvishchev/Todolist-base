@@ -2,6 +2,7 @@
   "name": "tdl2",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://andreysvishchev.github.io/Todolist-base",
   "dependencies": {
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
@@ -15,10 +16,13 @@
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
+    "@types/react-redux": "^7.1.24",
     "@types/uuid": "^8.3.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^8.0.1",
     "react-scripts": "5.0.0",
+    "redux": "^4.2.0",
     "typescript": "^4.4.2",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.0"
@@ -27,7 +31,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -46,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
   }
 }
