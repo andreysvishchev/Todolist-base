@@ -25,7 +25,7 @@ const initialState: Array<TodolistDomainType> = []
 export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: ActionsType): Array<TodolistDomainType> => {
     switch (action.type) {
         case "SET-TODOLIST":
-            return action.todolists.map((item)=> {
+            return action.todolists.map((item) => {
                 return {...item, filter: "all" as FilterValuesType}
             })
         case "REMOVE-TODOLIST":
@@ -68,13 +68,12 @@ export const SetTodolistAC = (todolists: TodolistType[]) => {
 }
 
 //thunk (принимает диспатч и стейт всего приложения)
-export const fetchTodosThunk = () => {
+export const fetchTodosTC = () => (dispatch: Dispatch) => {
     //сайд-эффект
-   return (dispatch: Dispatch)=> {
-       todolistsAPI.getTodolists()
-           .then((res)=> {
-               dispatch(SetTodolistAC(res.data))
-           })
-   }
-   // thunk всегда диспатчится
+    todolistsAPI.getTodolists()
+            .then((res) => {
+                dispatch(SetTodolistAC(res.data))
+            })
+
+    // thunk всегда диспатчится
 }
