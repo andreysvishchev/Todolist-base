@@ -1,8 +1,7 @@
 import {AnyAction, applyMiddleware, combineReducers, legacy_createStore as createStore} from "redux";
-import {tasksReducer} from "./tasks-reducer";
-import {todolistsReducer} from "./todolists-reducer";
+import {tasksReducer} from "../features/TodolistsList/tasks-reducer";
+import {todolistsReducer} from "../features/TodolistsList/todolists-reducer";
 import thunk, {ThunkDispatch} from "redux-thunk";
-
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
