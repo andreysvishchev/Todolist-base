@@ -1,9 +1,11 @@
 import React, {ChangeEvent, useCallback} from 'react';
 import {TaskStatuses, TaskType} from "../../../../api/todolists-api";
 import s from "../../../../app/App.module.css";
-import {Checkbox, IconButton} from "@material-ui/core";
+
 import {EditableSpan} from "../../../../components/EditableSpan";
-import {Delete} from "@material-ui/icons";
+import {Checkbox, IconButton} from "@mui/material";
+import {Delete} from "@mui/icons-material";
+
 
 
 type PropsType = {

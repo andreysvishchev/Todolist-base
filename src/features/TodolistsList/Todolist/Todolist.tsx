@@ -1,9 +1,7 @@
 import React, {memo, useCallback, useEffect} from 'react';
 import {AddItemForm} from '../../../components/AddItemForm';
 import {EditableSpan} from '../../../components/EditableSpan';
-import {IconButton} from "@material-ui/core";
-import {Delete} from "@material-ui/icons";
-import Button from "@material-ui/core/Button";
+
 import s from '../../../app/App.module.css'
 import {TaskStatuses, TaskType} from "../../../api/todolists-api";
 import {FilterValuesType} from "../todolists-reducer";
@@ -11,11 +9,16 @@ import {useDispatch} from "react-redux";
 import {fetchTasksTC} from "../tasks-reducer";
 import {AppDispatchType} from "../../../app/store";
 import Task from "./Task/Task";
+import {IconButton} from "@mui/material";
+import {Delete} from "@mui/icons-material";
+import Button from "@mui/material/Button";
+import {RequestStatusType} from "../../../app/app-reducer";
 
 type PropsType = {
     id: string
     title: string
     tasks: Array<TaskType>
+    entityStatus: RequestStatusType
     removeTask: (taskId: string, todolistId: string) => void
     changeFilter: (todolistId: string, value: FilterValuesType) => void
     addTask: (todolistId: string, title: string) => void
@@ -62,12 +65,12 @@ export const Todolist = memo((props: PropsType) => {
 
     return <div>
         <h3 className={s.title}><EditableSpan value={props.title} onChange={changeTodolistTitle}/>
-            <IconButton onClick={removeTodolist}>
+            <IconButton onClick={removeTodolist} disabled={props.entityStatus === 'loading'}>
                 <Delete/>
             </IconButton>
         </h3>
-        <AddItemForm addItem={addTask}/>
-        <div>
+        <AddItemForm addItem={addTask} disabled={props.entityStatus === 'loading'}/>
+        <div style={{marginTop: '15px'}}>
             {tasksForTodolist.map(t => {
                 return <Task key={t.id}
                              task={t}
@@ -80,15 +83,12 @@ export const Todolist = memo((props: PropsType) => {
         </div>
         <div className={s.buttons}>
             <Button variant={props.filter === 'all' ? 'contained' : 'text'}
-                    style={{marginRight: '5px', marginLeft: '10px'}}
                     size="medium"
                     onClick={onAllClickHandler}>All</Button>
             <Button variant={props.filter === 'active' ? 'contained' : 'text'}
-                    style={{marginRight: '5px', marginLeft: '10px'}}
                     size="medium"
                     onClick={onActiveClickHandler}>Active</Button>
             <Button variant={props.filter === 'completed' ? 'contained' : 'text'}
-                    style={{marginRight: '5px', marginLeft: '10px'}}
                     size="medium"
                     onClick={onCompletedClickHandler}>Completed</Button>
         </div>

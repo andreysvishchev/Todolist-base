@@ -1,5 +1,5 @@
-import React, {ChangeEvent, memo, useState} from 'react';
-import {TextField} from '@material-ui/core';
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
+import {TextField} from '@mui/material'
 import s from './EditableSpam.module.css'
 
 type EditableSpanPropsType = {
@@ -23,11 +23,22 @@ export const EditableSpan = memo((props: EditableSpanPropsType) => {
         setTitle(e.currentTarget.value)
     }
 
+    const onKeyPressHandler = (e:KeyboardEvent<HTMLInputElement>) => {
+        if(e.charCode === 13) {
+            setEditMode(false);
+            props.onChange(title);
+        }
+    }
+
     return (
         editMode
             ? <TextField variant={editMode ? "standard" : "outlined"}
                          size="small"
-                         value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode}/>
+                         value={title}
+                         onChange={changeTitle}
+                         autoFocus
+                         onKeyPress={onKeyPressHandler}
+                         onBlur={activateViewMode}/>
             : <span onDoubleClick={activateEditMode}>{props.value}</span>
     )
 

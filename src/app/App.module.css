@@ -1,7 +1,6 @@
 .task {
     display: flex;
     align-items: center;
-    padding-top: 5px;
 }
 
 .title {
@@ -10,5 +9,14 @@
 }
 
 .buttons {
-    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.zero {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
 }
