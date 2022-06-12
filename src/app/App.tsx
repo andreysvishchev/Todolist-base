@@ -17,7 +17,7 @@ import Container from "@mui/material/Container";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 
 export type TasksStateType = {
-    [key: string]: Array<TaskType>;
+    [key: string]: Array<TaskType>
 };
 
 function App() {

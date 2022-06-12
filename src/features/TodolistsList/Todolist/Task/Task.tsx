@@ -39,9 +39,9 @@ const Task: React.FC <PropsType>  = React.memo((props) => {
         <div key={task.id} className={s.task}>
             <Checkbox checked={task.status === TaskStatuses.Completed} style={{padding: '2px', marginRight: '10px'}}
                       color="primary"
-                      onChange={onChangeHandler}/>
-            <EditableSpan value={task.title} onChange={onTitleChangeHandler}/>
-            <IconButton onClick={onClickHandler} style={{padding: '2px', marginLeft: '20px'}}>
+                      onChange={onChangeHandler}  disabled={task.entityStatus === 'loading'}/>
+            <EditableSpan value={task.title} onChange={onTitleChangeHandler}  disabled={task.entityStatus === 'loading'}/>
+            <IconButton onClick={onClickHandler} style={{padding: '2px', marginLeft: '20px'}} disabled={task.entityStatus === 'loading'}>
                 <Delete/>
             </IconButton>
         </div>
