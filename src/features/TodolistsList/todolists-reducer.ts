@@ -3,9 +3,9 @@ import {Dispatch} from "redux";
 import {
     RequestStatusType,
     setAppErrorAC,
-    setAppErrorActionType,
+    SetAppErrorActionType,
     setAppStatusAC,
-    setAppStatusActionType
+    SetAppStatusActionType
 } from "../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 import { AxiosError } from "axios";
@@ -121,8 +121,8 @@ export type ActionsType =
     | ReturnType<typeof ChangeTodolistTitleAC>
     | ReturnType<typeof ChangeTodolistFilterAC>
     | ReturnType<typeof SetTodolistAC>
-    | setAppStatusActionType
-    | setAppErrorActionType
+    | SetAppStatusActionType
+    | SetAppErrorActionType
     | ReturnType<typeof changeTodolistEntityStatusAC>
 
 export type AddTodolistActionType = ReturnType<typeof AddTodolistAC>

@@ -5,14 +5,15 @@ import {EditableSpan} from '../../../components/EditableSpan';
 import s from '../../../app/App.module.css'
 import {TaskStatuses, TaskType} from "../../../api/todolists-api";
 import {FilterValuesType} from "../todolists-reducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {fetchTasksTC} from "../tasks-reducer";
-import {AppDispatchType} from "../../../app/store";
+import {AppDispatchType, AppStateType} from "../../../app/store";
 import Task from "./Task/Task";
 import {IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import {RequestStatusType} from "../../../app/app-reducer";
+import {Navigate, useNavigate} from "react-router-dom";
 
 type PropsType = {
     id: string
@@ -32,6 +33,7 @@ type PropsType = {
 export const Todolist = memo((props: PropsType) => {
 
     const dispatch = useDispatch<AppDispatchType>()
+
 
     useEffect(() => {
         dispatch(fetchTasksTC(props.id))
@@ -63,8 +65,13 @@ export const Todolist = memo((props: PropsType) => {
         tasksForTodolist = tasksForTodolist.filter((t) => t.status === TaskStatuses.Completed);
     }
 
+    /*   if (!isLoggedIn) {
+           return <Navigate to={'/login'}/>
+       }*/
+
     return <div>
-        <h3 className={s.title}><EditableSpan value={props.title} onChange={changeTodolistTitle} disabled={props.entityStatus === 'loading'}/>
+        <h3 className={s.title}><EditableSpan value={props.title} onChange={changeTodolistTitle}
+                                              disabled={props.entityStatus === 'loading'}/>
             <IconButton onClick={removeTodolist} disabled={props.entityStatus === 'loading'}>
                 <Delete/>
             </IconButton>

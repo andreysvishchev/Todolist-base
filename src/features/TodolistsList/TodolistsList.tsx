@@ -8,7 +8,7 @@ import {
     TodolistDomainType, updateTodolistTC
 } from "./todolists-reducer";
 import React, {useCallback, useEffect} from "react";
-import {addTaskTC, removeTaskTC, updateTaskTC} from "./tasks-reducer";
+import {addTaskTC, fetchTasksTC, removeTaskTC, updateTaskTC} from "./tasks-reducer";
 import {TaskStatuses} from "../../api/todolists-api";
 
 import {AddItemForm} from "../../components/AddItemForm";
@@ -17,15 +17,21 @@ import {TasksStateType} from "../../app/App";
 import {Grid} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import s from './../../app/App.module.css'
+import {useNavigate} from "react-router-dom";
 
 export const TodolistsList = () => {
     let todolists = useSelector<AppStateType, Array<TodolistDomainType>>(state => state.todolists)
     let tasks = useSelector<AppStateType, TasksStateType>(state => state.tasks)
-
+    const isLoggedIn = useSelector<AppStateType>(state => state.auth.isLoggedIn)
+    const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatchType>()
 
     useEffect(() => {
-        dispatch(fetchTodosTC())
+        if (isLoggedIn) {
+            dispatch(fetchTodosTC())
+        } else {
+            navigate('/login')
+        }
     }, [])
     const removeTask = useCallback((id: string, todolistId: string) => {
         dispatch(removeTaskTC(todolistId, id))
@@ -60,29 +66,29 @@ export const TodolistsList = () => {
                 <AddItemForm addItem={addTodolist}/>
             </Grid>
             <Grid container spacing={3}>
-                {todolists.length !== 0 ? todolists.map((tl) => {
-                        return (
-                            <Grid item key={tl.id}>
-                                <Paper style={{padding: "10px", minWidth: "280px", maxWidth: "320px"}}>
-                                    <Todolist
-                                        id={tl.id}
-                                        title={tl.title}
-                                        tasks={tasks[tl.id]}
-                                        removeTask={removeTask}
-                                        changeFilter={changeFilter}
-                                        addTask={addTask}
-                                        changeTaskStatus={changeStatus}
-                                        filter={tl.filter}
-                                        removeTodolist={removeTodolist}
-                                        changeTaskTitle={changeTaskTitle}
-                                        changeTodolistTitle={changeTodolistTitle}
-                                        entityStatus={tl.entityStatus}
-                                    />
-                                </Paper>
-                            </Grid>
-                        );
-                    }) :
-                    <div className={s.zero}>crate task</div>
+                {todolists.map((tl) => {
+                    return (
+                        <Grid item key={tl.id}>
+                            <Paper style={{padding: "10px", minWidth: "280px", maxWidth: "320px"}}>
+                                <Todolist
+                                    id={tl.id}
+                                    title={tl.title}
+                                    tasks={tasks[tl.id]}
+                                    removeTask={removeTask}
+                                    changeFilter={changeFilter}
+                                    addTask={addTask}
+                                    changeTaskStatus={changeStatus}
+                                    filter={tl.filter}
+                                    removeTodolist={removeTodolist}
+                                    changeTaskTitle={changeTaskTitle}
+                                    changeTodolistTitle={changeTodolistTitle}
+                                    entityStatus={tl.entityStatus}
+                                />
+                            </Paper>
+                        </Grid>
+                    );
+                })
+
                 }
             </Grid>
         </>

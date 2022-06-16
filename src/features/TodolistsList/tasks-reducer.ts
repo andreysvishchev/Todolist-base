@@ -6,9 +6,9 @@ import {AppStateType} from "../../app/store";
 import {
     RequestStatusType,
     setAppErrorAC,
-    setAppErrorActionType,
+    SetAppErrorActionType,
     setAppStatusAC,
-    setAppStatusActionType
+    SetAppStatusActionType
 } from "../../app/app-reducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
@@ -131,7 +131,6 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
             todolistsAPI.updateTask(todolistId, taskId, apiModel)
                 .then((res) => {
                     if (res.data.resultCode === 0) {
-                        console.log(res.data.data)
                         dispatch(updateTaskAC(taskId, apiModel, todolistId,));
                         dispatch(setAppStatusAC('succeeded'))
                         dispatch(changeTaskEntityStatusAC(todolistId, taskId, 'idle'))
@@ -162,6 +161,6 @@ type ActionsType =
     | RemoveTodolistActionType
     | SetTodolistActionType
     | ReturnType<typeof fetchTasksAC>
-    | setAppStatusActionType
-    | setAppErrorActionType
+    | SetAppStatusActionType
+    | SetAppErrorActionType
     | ReturnType<typeof changeTaskEntityStatusAC>
