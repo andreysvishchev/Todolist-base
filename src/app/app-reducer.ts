@@ -6,7 +6,8 @@ import {AxiosError} from "axios";
 
 const initialState: InitialStateType = {
     status: 'idle' as RequestStatusType,
-    error: null
+    error: null,
+    isInitialized: false
 }
 
 export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -15,6 +16,8 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
             return {...state, status: action.status}
         case "APP/SET-ERROR":
             return {...state, error: action.error}
+        case "APP/SET-INITIALIZED":
+            return {...state, isInitialized: action.isInitialized}
         default:
             return state
     }
@@ -26,6 +29,10 @@ export const setAppStatusAC = (status: RequestStatusType) => {
 }
 export const setAppErrorAC = (error: string | null) => {
     return {type: 'APP/SET-ERROR', error} as const
+}
+
+export const setAppInitializedAC = (isInitialized: boolean) => {
+    return {type: 'APP/SET-INITIALIZED', isInitialized} as const
 }
 
 //thunk
@@ -43,6 +50,9 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
         .catch((err: AxiosError) => {
             handleServerNetworkError(dispatch, err.message)
         })
+        .finally(()=> {
+            dispatch(setAppInitializedAC(true))
+        })
 }
 
 
@@ -50,10 +60,13 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
 export type ActionsType =
     | SetAppStatusActionType
     | SetAppErrorActionType
+    | setAppInitializedActionType
 type InitialStateType = {
     status: RequestStatusType
-    error: string | null
+    error: string | null,
+    isInitialized: boolean
 }
+export type setAppInitializedActionType = ReturnType<typeof setAppInitializedAC>
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
 export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>

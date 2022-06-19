@@ -6,7 +6,7 @@ import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatchType, AppStateType, useAppSelector} from "./store";
-import {initializeAppTC, RequestStatusType} from "./app-reducer";
+import {initializeAppTC, RequestStatusType, setAppInitializedActionType} from "./app-reducer";
 import {AppBar} from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -17,6 +17,8 @@ import Container from "@mui/material/Container";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {Login} from "../features/Login/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
+import {loginTC, logoutTC} from "../features/Login/auth-reducer";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -25,11 +27,27 @@ export type TasksStateType = {
 function App() {
 
     const status = useAppSelector<RequestStatusType>(state => state.app.status)
+    const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
+    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+
     const dispatch = useDispatch<AppDispatchType>()
 
-    useEffect(()=> {
+    useEffect(() => {
         dispatch(initializeAppTC())
-    },[])
+    }, [])
+
+    if (!isInitialized) {
+        return (
+            <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+                <CircularProgress/>
+            </div>
+        )
+    }
+
+    const logoutHandler = () => {
+        dispatch(logoutTC())
+    }
+
 
     return (
         <div className="App">
@@ -39,7 +57,12 @@ function App() {
                     <IconButton edge="start" color="inherit" aria-label="menu">
                         <Menu open={false}/>
                     </IconButton>
-                    <Button color="inherit">Login</Button>
+                    {
+                        isLoggedIn &&
+                        <Button onClick={logoutHandler} color="inherit">LogOut</Button>
+
+                    }
+
                 </Toolbar>
 
             </AppBar>

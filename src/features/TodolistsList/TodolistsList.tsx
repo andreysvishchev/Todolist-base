@@ -32,7 +32,7 @@ export const TodolistsList = () => {
         } else {
             navigate('/login')
         }
-    }, [])
+    }, [isLoggedIn])
     const removeTask = useCallback((id: string, todolistId: string) => {
         dispatch(removeTaskTC(todolistId, id))
     }, [dispatch])
